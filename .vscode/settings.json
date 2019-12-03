@@ -18,5 +18,6 @@
   "editor.tabCompletion"           : "on",
   "editor.wordWrap"                : "on",
   "editor.wordWrapColumn"          : 80,
-  "peacock.color": "#007fff"
+  "peacock.color": "#007fff",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
