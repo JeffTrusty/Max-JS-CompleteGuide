@@ -10,13 +10,27 @@ const LOG_EVENT_PLAYER_HEAL = 'PLAYER_HEAL';
 const LOG_EVENT_MONSTER_ATTACK = 'MONSTER_ATTACK';
 const LOG_EVENT_GAME_OVER = 'GAME_OVER';
 
-const enteredValue = prompt('Enter max life value for you and the monster', '100');
+let battleLog = [];
+let lastLoggedEntry;
 
-let chosenMaxLife = parseInt(enteredValue);
-const battleLog = [];
+function getMaxLifeValues() {
+  const enteredValue = prompt('Enter max life value for you and the monster', '100');
+  const parsedValue = parseInt(enteredValue);
+  if (isNaN(parsedValue) || parsedValue <= 0) {
+    throw { message: 'Invalid user input, not a number.' };
+  }
+  return parsedValue;
+}
+let chosenMaxLife;
 
-if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+try {
+  chosenMaxLife = getMaxLifeValues();
+} catch (error) {
+  console.log(error);
   chosenMaxLife = 100;
+  alert('Invalid input, default value of 100 used.');
+} finally {
+  // always executes This is good for cleaning up...
 }
 
 let currentMonsterHealth = chosenMaxLife;
@@ -81,7 +95,8 @@ function endRound() {
 
 function attackMonster(attackType) {
   const maxDamage = attackType === NORMAL_ATTACK ? ATTACK_VALUE : STRONG_ATTACK_VALUE;
-  const logEvent = attackType === NORMAL_ATTACK ? LOG_EVENT_PLAYER_ATTACK : LOG_EVENT_PLAYER_STRONG_ATTACK;
+  const logEvent =
+    attackType === NORMAL_ATTACK ? LOG_EVENT_PLAYER_ATTACK : LOG_EVENT_PLAYER_STRONG_ATTACK;
 
   // if (attackType === NORMAL_ATTACK) {
   //   maxDamage = ATTACK_VALUE;
@@ -119,32 +134,28 @@ function healPlayer() {
 }
 
 function printLogHandler() {
-  // for loop:
-  // for (let i = 0; i < battleLog.length; i++)
-  // {
-  //   console.log(battleLog[i]);
-  // }
-  // for-of loop:
-  // for (const logEntry of battleLog)
-  // {
-  //   console.log(logEntry);
-  // }
-  // for-in loop:
-  for (const logEntry of battleLog)
-  {
-    console.log(`#${i}`);
-    for (const key in logEntry)
-    {
-      console.log(`${key} => ${logEntry[key]}'); // property name
+  outterFor: for (let i = 0; i < 5; i++) {
+    console.log('inner', i);
+    innerFor: for (let j = 0; j < 5; j++) {
+      if (j === 3) {
+        break outterFor;
+      }
+      console.log('inner', j);
+    }
+  }
+
+  let i = 0;
+  for (const logEntry of battleLog) {
+    if ((!lastLoggedEntry && lastLoggedEntry !== 0) || lastLoggedEntry === i) {
+      console.log(`#${i}`);
+      for (const key in logEntry) {
+        console.log(`Key: ${key} Value: ${logEntry[key]}`);
+      }
+      lastLoggedEntry = i;
+      break;
     }
     i++;
   }
-  // while loop:
-  while (j < battleLog.length){
-    console.log(battleLog[j]);
-    j++
-  }
-
 }
 
 attackBtn.addEventListener('click', attackMonsterHandler);
