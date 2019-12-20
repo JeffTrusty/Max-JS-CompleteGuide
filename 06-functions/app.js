@@ -13,7 +13,7 @@ const getPlayerChoice = () => {
   const selection = prompt(`${ROCK}, ${PAPER} or ${SCISSORS}?`, '').toUpperCase();
   if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
     alert('Invalid Choice, Rock was chosen for you');
-    return DEFAULT_USER_CHOICE;
+    return;
   }
   return selection;
 };
@@ -31,7 +31,7 @@ const getComputerChoice = () => {
 // arrow functions with a single statement allows us to not require a return and not use the {}
 
 // changed getWinner to an arrow function and use ternary syntax which is now a single statement
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
   cChoice === pChoice
     ? RESULT_DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -62,15 +62,51 @@ startGameBtn.addEventListener('click', () => {
   gameIsRunning = true;
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
+  let winner;
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice);
+  }
   const winner = getWinner(playerChoice, computerChoice);
-  let message = `You picked ${playerChoice}, computer picked ${computerChoice}. There for you `;
+  let message = `You picked ${playerChoice ||
+    DEFAULT_USER_CHOICE}, computer picked ${computerChoice}. There for you `;
   if (winner === RESULT_DRAW) {
     message += 'had a draw.';
   } else if (winner === RESULT_PLAYER_WINS) {
-    message += 'win.';
+    message += 'won.';
   } else {
     message += 'lost.';
   }
   alert(message);
   gameIsRunning = false;
 });
+
+
+// not app related
+
+// Rest operator is used to take in an unknown number of parameters and converts them to an array
+const sumUp = (...numbers) => {
+  let sum = 0;
+  for (const num of numbers)
+  {
+    sum += sum;
+  }
+  return sum;
+};
+
+// The arguments key word is how < ES6 did an unknown number of parameters. You MUST us the function keyword and the arguments is similar to an arguments array
+const subtractUp = function () {
+  let sum = 0;
+  for (const num of arguments) // don't use this methodology
+  {
+    sum -= sum;
+  }
+  return sum;
+}
+
+console.log(sumUp(1, 5, 4, 3, -5, 20));
+console.log(sumUp(1, 5, 4, 3, -5, 20, 15, 329));
+console.log(subtractUp(1, 10, 15, 20));
+
+
