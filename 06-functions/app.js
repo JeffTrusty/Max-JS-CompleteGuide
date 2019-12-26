@@ -62,12 +62,12 @@ startGameBtn.addEventListener('click', () => {
   gameIsRunning = true;
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
-  let winner;
-  if (playerChoice) {
-    winner = getWinner(computerChoice, playerChoice);
-  } else {
-    winner = getWinner(computerChoice);
-  }
+  // let winner;
+  // if (playerChoice) {
+  //   winner = getWinner(computerChoice, playerChoice);
+  // } else {
+  //   winner = getWinner(computerChoice);
+  // }
   const winner = getWinner(playerChoice, computerChoice);
   let message = `You picked ${playerChoice ||
     DEFAULT_USER_CHOICE}, computer picked ${computerChoice}. There for you `;
@@ -82,31 +82,65 @@ startGameBtn.addEventListener('click', () => {
   gameIsRunning = false;
 });
 
-
 // not app related
+// Rest operator (...) is used to take in an unknown number of parameters and converts them to an array
+const combine = (resultHandler, operation, ...numbers) => {
+  const validateNumber = number => {
+    return isNaN(number) ? 0 : number;
+  };
 
-// Rest operator is used to take in an unknown number of parameters and converts them to an array
-const sumUp = (...numbers) => {
   let sum = 0;
-  for (const num of numbers)
-  {
-    sum += sum;
+  for (const num of numbers) {
+    if (operation === 'ADD') {
+      sum += validateNumber(num);
+    } else {
+      sum -= validateNumber(num);
+    }
   }
-  return sum;
+  resultHandler(sum);
 };
 
+const showResult = (messageText, result) => {
+  alert(messageText + ' ' + result);
+};
+
+combine(
+  showResult.bind(this, 'The result of adding all numbers is:'),
+  'ADD',
+  1,
+  5,
+  4,
+  'asdf',
+  -5,
+  20
+);
+combine(
+  showResult.bind(this, 'The result of adding all numbers is:'),
+  'ADD',
+  1,
+  5,
+  4,
+  3,
+  -5,
+  20,
+  15,
+  329
+);
+combine(
+  showResult.bind(this, 'The result of subtracting all numbers is:'),
+  'SUBTRACT',
+  1,
+  10,
+  15,
+  20
+);
+
 // The arguments key word is how < ES6 did an unknown number of parameters. You MUST us the function keyword and the arguments is similar to an arguments array
-const subtractUp = function () {
-  let sum = 0;
-  for (const num of arguments) // don't use this methodology
-  {
-    sum -= sum;
-  }
-  return sum;
-}
-
-console.log(sumUp(1, 5, 4, 3, -5, 20));
-console.log(sumUp(1, 5, 4, 3, -5, 20, 15, 329));
-console.log(subtractUp(1, 10, 15, 20));
-
-
+// const subtractUp = function() {
+//   let sum = 0;
+//   for (const num of arguments) {
+//     // don't use this methodology
+//     sum -= num;
+//   }
+//   return sum;
+// };

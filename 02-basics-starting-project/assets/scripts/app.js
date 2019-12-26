@@ -9,12 +9,7 @@ function createDescription(operator, beforeValue, valueOperatingOn) {
   outputResult(currentResult, calcDescription);
 }
 
-function writeToLog(
-  OperationIdentifier,
-  prevResult,
-  operationNumber,
-  newResult
-) {
+function writeToLog(OperationIdentifier, prevResult, operationNumber, newResult) {
   const logEntry = {
     operation: OperationIdentifier,
     prevResult: prevResult,
@@ -25,39 +20,60 @@ function writeToLog(
   console.log(logEntries);
 }
 
-function add() {
+function calculate(operation) {
   const numberEntered = getNumberEntered();
   const initialResult = currentResult;
-  currentResult += numberEntered;
-  createDescription('+', initialResult, currentResult);
-  writeToLog('ADD',initialResult, numberEntered, currentResult);
+  let operator;
+  if (operation === 'ADD') {
+    currentResult += numberEntered;
+    operator = '+';
+  } else if (operation === 'SUBTRACT') {
+    currentResult -= numberEntered;
+    operator = '-';
+  } else if (operation === 'MULTIPLY') {
+    currentResult *= numberEntered;
+    operator = '*';
+  } else {
+    currentResult /= numberEntered;
+    operator = '/';
+  }
+  createDescription(operator, initialResult, numberEntered);
+  writeToLog(operator, initialResult, numberEntered, currentResult);
 }
 
-function subtract() {
-  const numberEntered = getNumberEntered();
-  const initialResult = currentResult;
-  currentResult -= numberEntered;
-  createDescription('-', initialResult, currentResult);
-  writeToLog('SUBTRACT',initialResult, numberEntered, currentResult);
-}
+addBtn.addEventListener('click', calculate.bind(this, 'ADD'));
+subtractBtn.addEventListener('click', calculate.bind(this, 'SUBTRACT'));
+multiplyBtn.addEventListener('click', calculate.bind(this, 'MULTIPLY'));
+divideBtn.addEventListener('click', calculate.bind(this, 'DIVIDE'));
 
-function multiply() {
-  const numberEntered = getNumberEntered();
-  const initialResult = currentResult;
-  currentResult *= numberEntered;
-  createDescription('*', initialResult, currentResult);
-  writeToLog('MULTIPLY',initialResult, numberEntered, currentResult);
-}
+// function add() {
+//   const numberEntered = getNumberEntered();
+//   const initialResult = currentResult;
+//   currentResult += numberEntered;
+//   createDescription('+', initialResult, currentResult);
+//   writeToLog('ADD', initialResult, numberEntered, currentResult);
+// }
 
-function divide() {
-  const numberEntered = getNumberEntered();
-  const initialResult = currentResult;
-  currentResult /= numberEntered;
-  createDescription('/', initialResult, currentResult);
-  writeToLog('DIVIDE',initialResult, numberEntered, currentResult);
-}
+// function subtract() {
+//   const numberEntered = getNumberEntered();
+//   const initialResult = currentResult;
+//   currentResult -= numberEntered;
+//   createDescription('-', initialResult, currentResult);
+//   writeToLog('SUBTRACT', initialResult, numberEntered, currentResult);
+// }
 
-addBtn.addEventListener('click', add);
-subtractBtn.addEventListener('click', subtract);
-multiplyBtn.addEventListener('click', multiply);
-divideBtn.addEventListener('click', divide);
+// function multiply() {
+//   const numberEntered = getNumberEntered();
+//   const initialResult = currentResult;
+//   currentResult *= numberEntered;
+//   createDescription('*', initialResult, currentResult);
+//   writeToLog('MULTIPLY', initialResult, numberEntered, currentResult);
+// }
+
+// function divide() {
+//   const numberEntered = getNumberEntered();
+//   const initialResult = currentResult;
+//   currentResult /= numberEntered;
+//   createDescription('/', initialResult, currentResult);
+//   writeToLog('DIVIDE', initialResult, numberEntered, currentResult);
+// }
