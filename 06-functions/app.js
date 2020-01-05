@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 const startGameBtn = document.getElementById('start-game-btn');
 const ROCK = 'ROCK';
 const PAPER = 'PAPER';
@@ -32,13 +33,13 @@ const getComputerChoice = () => {
 
 // changed getWinner to an arrow function and use ternary syntax which is now a single statement
 const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
-  cChoice === pChoice
-    ? RESULT_DRAW
-    : (cChoice === ROCK && pChoice === PAPER) ||
-      (cChoice === PAPER && pChoice === SCISSORS) ||
-      (cChoice === SCISSORS && pChoice === PAPER)
-    ? RESULT_COMPUTER_WINS
-    : RESULT_PLAYER_WINS;
+  cChoice === pChoice ?
+  RESULT_DRAW :
+  (cChoice === ROCK && pChoice === PAPER) ||
+  (cChoice === PAPER && pChoice === SCISSORS) ||
+  (cChoice === SCISSORS && pChoice === PAPER) ?
+  RESULT_COMPUTER_WINS :
+  RESULT_PLAYER_WINS;
 
 // const getWinner = function(cChoice, pChoice) {
 //   if (cChoice === pChoice) {
@@ -101,7 +102,7 @@ const combine = (resultHandler, operation, ...numbers) => {
 };
 
 const showResult = (messageText, result) => {
-  alert(messageText + ' ' + result);
+  alert(`${messageText} ${result}`);
 };
 
 combine(

@@ -20,6 +20,9 @@
     "no-alert": "off",
     "radix": "off",
     "no-restricted-globals": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "no-use-before-define": "off",
+    "no-undef": "off",
+    "no-restricted-syntax": "off"
   }
 }
