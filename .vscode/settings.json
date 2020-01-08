@@ -16,5 +16,8 @@
   },
   "peacock.color": "#007fff",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "unshift"
+  ]
 }
