@@ -1,7 +1,14 @@
-class Person {
+class AgedPerson {
+  printAge() {
+    console.log(this.age);
+  }
+}
+
+class Person extends AgedPerson {
   name = 'Jeff';
-  constructor(age) {
-    this.age = age;
+  constructor() {
+    super();
+    this.age = 56;
   }
   greet() {
     console.log('Hi, I am ' + this.name + ', I am ' + this.age + ' years old.');
@@ -9,3 +16,7 @@ class Person {
 }
 const person = new Person(56);
 person.greet();
+
+
+const p = new Person();
+console.log(p);
