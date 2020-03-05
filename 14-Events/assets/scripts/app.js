@@ -84,6 +84,7 @@ class ProjectItem {
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
+    this.connectDrag();
   }
 
   showMoreInfoHandler() {
@@ -103,11 +104,21 @@ class ProjectItem {
     this.hasActiveTooltip = true;
   }
 
+  connectDrag() {
+    const item = document.getElementById(this.id);
+    item.addEventListener('dragstart', event => {
+      event.dataTransfer.setData('text/plain', this.id);
+      event.dataTransfer.effectAllowed = 'move';
+    });
+
+    item.addEventListener('dragend', event => {
+      console.log(event);
+    });
+  }
+
   connectMoreInfoButton() {
     const projectItemElement = document.getElementById(this.id);
-    const moreInfoBtn = projectItemElement.querySelector(
-      'button:first-of-type'
-    );
+    const moreInfoBtn = projectItemElement.querySelector('button:first-of-type');
     moreInfoBtn.addEventListener('click', this.showMoreInfoHandler.bind(this));
   }
 
@@ -116,10 +127,7 @@ class ProjectItem {
     let switchBtn = projectItemElement.querySelector('button:last-of-type');
     switchBtn = DOMHelper.clearEventListeners(switchBtn);
     switchBtn.textContent = type === 'active' ? 'Finish' : 'Activate';
-    switchBtn.addEventListener(
-      'click',
-      this.updateProjectListsHandler.bind(null, this.id)
-    );
+    switchBtn.addEventListener('click', this.updateProjectListsHandler.bind(null, this.id));
   }
 
   update(updateProjectListsFn, type) {
@@ -135,11 +143,44 @@ class ProjectList {
     this.type = type;
     const prjItems = document.querySelectorAll(`#${type}-projects li`);
     for (const prjItem of prjItems) {
-      this.projects.push(
-        new ProjectItem(prjItem.id, this.switchProject.bind(this), this.type)
-      );
+      this.projects.push(new ProjectItem(prjItem.id, this.switchProject.bind(this), this.type));
     }
     console.log(this.projects);
+    this.connectDroppable();
+  }
+
+  connectDroppable() {
+    const list = document.querySelector(`#${this.type}-projects ul`);
+
+    list.addEventListener('dragenter', event => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        list.parentElement.classList.add('droppable');
+        event.preventDefault();
+      }
+      list.parentElement.classList.add('droppable');
+    });
+
+    list.addEventListener('dragover', event => {
+      if (event.dataTransfer.types[0] === 'text/plain') {
+        event.preventDefault();
+      }
+    });
+
+    list.addEventListener('dragleave', event => {
+      if (event.relatedTarget.closest(`#${this.type}-projects ul`) !== list) {
+        list.parentElement.classList.remove('droppable');
+      }
+    });
+
+    list.addEventListener('drop', event => {
+      const prjId = event.dataTransfer.getData('text/plain');
+      if (this.projects.find(p => p.id === prjId)) {
+        return;
+      }
+      document.getElementById(prjId).querySelector('button:last-of-type').click();
+      list.parentElement.classList.remove('droppable');
+      // event.preventDefault(); // not really required
+    });
   }
 
   setSwitchHandlerFunction(switchHandlerFunction) {
@@ -171,11 +212,11 @@ class App {
       activeProjectsList.addProject.bind(activeProjectsList)
     );
 
-    const timerId = setTimeout(this.startAnalytics, 3000);
+    // const timerId = setTimeout(this.startAnalytics, 3000);
 
-    document.getElementById('stop-analytics-btn').addEventListener('click', () => {
-      clearTimeout(timerId);
-    });
+    // document.getElementById('stop-analytics-btn').addEventListener('click', () => {
+    //   clearTimeout(timerId);
+    // });
   }
 
   static startAnalytics() {

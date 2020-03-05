@@ -1,24 +1,17 @@
-const buttons = document.querySelectorAll('button');
+const button = document.querySelector('button');
 
 // button.onclick = function() {
 
 // };
 
 const buttonClickHandler = event => {
-  event.target.disabled = true;
-  console.log(event.target.dataset.url);
-  console.log(event.target.dataset.pwd);
-  copyStringToClipboard(event.target.dataset.pwd);
-  // setTimeout(() => {
-  //   copyStringToClipboard(' ');
-  // }, 2000);
-  window.open(event.target.dataset.url, '_blank');
+  // event.target.disabled = true;
   console.log(event);
 };
 
-// const anotherButtonClickHandler = () => {
-//   console.log('This was clicked!');
-// };
+const anotherButtonClickHandler = () => {
+  console.log('This was clicked!');
+};
 
 // button.onclick = buttonClickHandler;
 // button.onclick = anotherButtonClickHandler;
@@ -31,26 +24,45 @@ const boundFn = buttonClickHandler.bind(this);
 //   button.removeEventListener('click', buttonClickHandler);
 // }, 2000);
 
-buttons.forEach(btn => {
-  btn.addEventListener('click', buttonClickHandler);
+// buttons.forEach(btn => {
+//   btn.addEventListener('mouseenter', buttonClickHandler);
+// });
+
+// window.addEventListener('scroll', event => {
+//   console.log(event);
+// });
+
+const form = document.querySelector('form');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  console.log(event);
 });
 
-function copyStringToClipboard(str) {
-  // Create new element
-  var el = document.createElement('textarea');
-  // Set value (string to be copied)
-  el.value = str;
-  // Set non-editable to avoid focus and move outside of view
-  el.setAttribute('readonly', '');
-  el.style = {
-    position: 'absolute',
-    left: '-9999px'
-  };
-  document.body.appendChild(el);
-  // Select text inside element
-  el.select();
-  // Copy text to clipboard
-  document.execCommand('copy');
-  // Remove temporary element
-  document.body.removeChild(el);
-}
+const div = document.querySelector('div');
+
+div.addEventListener('mouseenter', event => {
+  console.log('CLICKED DIV');
+  console.log(event);
+});
+
+button.addEventListener('mouseenter', event => {
+  event.stopPropagation();
+  console.log('CLICKED BUTTON');
+  console.log(event);
+});
+
+const listItems = document.querySelectorAll('li');
+const list = document.querySelector('ul');
+
+// listItems.forEach(listItem => {
+//   listItem.addEventListener('click', event => {
+//     event.target.classList.toggle('highlight');
+//   });
+// });
+
+list.addEventListener('click', event => {
+  // console.log(event.currentTarget);
+  // event.target.classList.toggle('highlight');
+  event.target.closest('li').classList.toggle('highlight');
+});
