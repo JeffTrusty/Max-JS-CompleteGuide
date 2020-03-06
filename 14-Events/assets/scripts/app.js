@@ -46,7 +46,7 @@ class Tooltip extends Component {
     this.create();
   }
 
-  closeTooltip = () => {
+  closeTooltip() {
     this.detach();
     this.closeNotifier();
   };
@@ -77,15 +77,16 @@ class Tooltip extends Component {
 }
 
 class ProjectItem {
-  hasActiveTooltip = false;
 
   constructor(id, updateProjectListsFunction, type) {
+    this.hasActiveTooltip = false;
     this.id = id;
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(type);
     this.connectDrag();
   }
+
 
   showMoreInfoHandler() {
     if (this.hasActiveTooltip) {

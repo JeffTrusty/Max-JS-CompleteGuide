@@ -7,17 +7,20 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^1.19.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier": "1.19.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,5 +35,6 @@
   "bugs": {
     "url": "https://github.com/JeffTrusty/Max-JS-CompleteGuide/issues"
   },
-  "homepage": "https://github.com/JeffTrusty/Max-JS-CompleteGuide#readme"
+  "homepage": "https://github.com/JeffTrusty/Max-JS-CompleteGuide#readme",
+  "keywords": []
 }
