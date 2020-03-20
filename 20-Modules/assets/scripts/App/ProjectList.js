@@ -1,5 +1,6 @@
 import { ProjectItem } from './ProjectItem.js';
 import { DOMHelper } from '../Utility/DOMHelper.js';
+// import * as DOMH from '../Utility/DOMHelper.js'; // imports all classes - functions exported in the file as an object
 
 export class ProjectList {
   projects = [];
