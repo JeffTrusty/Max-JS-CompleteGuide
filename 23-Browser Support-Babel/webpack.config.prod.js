@@ -2,14 +2,14 @@ const path = require('path');
 const CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/app.js',
   output: {
-    filename: 'app.js',
+    filename: '[contenthash].js',
     path: path.resolve(__dirname, 'assets', 'scripts'),
     publicPath: 'assets/scripts/'
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-source-map',
   // devServer: {
   //   contentBase: './'
   // }
@@ -17,12 +17,15 @@ module.exports = {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', {useBuiltIns: 'usage', corejs: {version: 3}}]
+              [
+                '@babel/preset-env',
+                { useBuiltIns: 'usage', corejs: { version: 3 } }
+              ]
             ]
           }
         }
